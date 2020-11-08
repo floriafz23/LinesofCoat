@@ -1,0 +1,321 @@
+
+import requests, json
+
+print("LINES OF COAT")
+# Enter your API key here 
+api_key = "10911374faab1e78ca0b300b7388cd65"
+  
+# base_url variable to store url 
+base_url = "http://api.openweathermap.org/data/2.5/weather?"
+  
+# Give city name 
+city_name = input("Enter city name : ") 
+ 
+complete_url = base_url + "appid=" + api_key + "&q=" + city_name 
+response = requests.get(complete_url) 
+
+
+x = response.json() 
+if x["cod"] != "404": 
+  
+    # store the value of "main" 
+    # key in variable y 
+    y = x["main"] 
+    w = x["wind"]
+    r = x["visibility"]
+    # store the value corresponding 
+    # to the "temp" key of y 
+    current_temperature = y["temp"]
+    
+    # store the value corresponding 
+    # to the "pressure" key of y 
+    current_pressure = y["pressure"] 
+  
+    # store the value corresponding 
+    # to the "humidity" key of y 
+    current_humidiy = y["humidity"] 
+
+    current_windspeed = w["speed"]
+
+    #current_rain = r[1]["rain"]
+  
+    # store the value of "weather" 
+    # key in variable z 
+    z = x["weather"] 
+  
+    # store the value corresponding  
+    # to the "description" key at  
+    # the 0th index of z 
+    weather_description = z[0]["description"]
+    weather_main = z[0]["main"]
+
+  
+else: 
+    print(" City Not Found ") 
+
+#Importing Data for the Temperature
+#temp = data["main"]["temp"]
+temp_celsius = current_temperature -273
+temp = int(temp_celsius)
+print("Temperature =", temp, "C")
+
+#Importing amount of wind speed
+#windspeed = data["main"]["windspeed"]
+windspeed = current_windspeed *3.6
+print("Wind Speed =", windspeed, "km/h")
+
+#Importing amount of percepitatiton
+#precip = data["main"]["precip"]
+conditions = weather_main
+print("Conditions =", conditions)
+if weather_main == 'Drizzle': 
+  rain = 1
+elif weather_main == 'Snow': 
+  rain = 1
+elif weather_main == 'Heavy Rain': 
+  rain = 1
+elif weather_main == 'Rain': 
+  rain = 1
+elif weather_main == 'Showers': 
+  rain = 1
+elif weather_main == 'Light Rain': 
+  rain = 1
+else:
+  rain = 0;
+
+#Outfit by Weather Condition
+
+print("Today I'm feeling: 1) Casual 2) Fancy")
+category_choice = int(input("Pick a Number: "))
+while 1: 
+  if windspeed > 60: 
+    print ("Winds are very high! Please stay safe at home.")
+    break
+  elif temp < -30:
+    print("Temperatures are very low! Plase stay safe at home.")
+    break
+  elif temp > 40: 
+    print("Temperatures are very high! Please stay safe at home")
+    break
+  elif category_choice == 1 and temp < 5 and windspeed < 20:
+    print("Recommended Outfit:")
+    print("Top: Turtleneck, Longsleeved Shirt, Sweater")
+    print("Bottoms: Thermal Leggings / Pants")
+    print("Shoes: Waterproof Winter Boots")
+    print("Outerwear: Hooded Down Jacket")
+    print("Accessories: Beanie, Earmuffs, Scarves, Gloves")
+    break
+  elif category_choice == 1 and temp < 5 and windspeed in range(20,40):
+    print("Recommended Outfit:")
+    print("Top: Turtleneck, Longsleeved Shirt, Sweater")
+    print("Bottoms: Thermal Leggings / Pants")
+    print("Shoes: Waterproof Winter Boots")
+    print("Outerwear: Hooded Down Jacket")
+    print("Accessories: Beanie, Earmuffs, Scarves, Gloves")
+    break
+  elif category_choice == 1 and temp < 5 and windspeed in range(40,60):
+    print("Weather out is dangerous! Please stay safe at home")
+    break
+  elif category_choice == 1 and temp in range(5,20) and windspeed < 20 and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: Long-Sleeved Shirt")
+    print("Bottoms: Jeans or Thick Leggings")
+    print("Shoes: Closed-Toe Shoes (Sneakers or Boots")
+    print("Outerwear: Hoodie, Cardigan, Pullover")
+    print("Accessories: none")
+    break
+  elif category_choice == 1 and temp in range(5,20) and windspeed < 20 and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: Long-Sleeved Shirt")
+    print("Bottoms: Jeans or Thick Leggings")
+    print("Shoes: Closed-Toe Shoes (Sneakers or Boots")
+    print("Outerwear: Hoodie, Cardigan, Pullover")
+    print("Accessories: Umbrella")
+    break
+  elif category_choice == 1 and temp in range(5,20) and windspeed in range(20,40) and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: Long-Sleeved Shirt")
+    print("Bottoms: Jeans or Thick Leggings")
+    print("Shoes: Closed-Toe Shoes (Sneakers or Boots")
+    print("Outerwear: Windbreaker")
+    print("Accessories: Scarves")
+    break
+  elif category_choice == 1 and temp in range(5,20) and windspeed in range(20,40) and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: Long-Sleeved Shirt")
+    print("Bottoms: Jeans or Thick Leggings")
+    print("Shoes: Closed-Toe Shoes (Sneakers or Boots")
+    print("Outerwear: Windbreaker")
+    print("Accessories: Scarves, Umbrella")
+    break
+  elif category_choice == 1 and temp in range(5,20) and windspeed in range(40,60) and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: Long-Sleeved Shirt")
+    print("Bottoms: Jeans or Thick Leggings")
+    print("Shoes: Closed-Toe Shoes (Sneakers or Boots")
+    print("Outerwear: Windbreaker, Pullover")
+    print("Accessories: Scarves")
+    break
+  elif category_choice == 1 and temp in range(5,20) and windspeed in range(40,60) and rain == 1:
+    print("Weather out is dangerous! Please stay safe at home")
+    break
+  elif category_choice == 1 and temp in range(20,40) and windspeed < 20 and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: T-Shirt")
+    print("Bottoms: Shorts")
+    print("Shoes: Flip Flops or Sandals")
+    print("Outerwear: none")
+    print("Accessories: none")
+    break
+  elif category_choice == 1 and temp in range(20,40) and windspeed < 20 and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: T-Shirt")
+    print("Bottoms: Shorts")
+    print("Shoes: Sneakers")
+    print("Outerwear: Hoodie, Pullover")
+    print("Accessories: Umbrella, Raincoat")
+    break
+  elif category_choice == 1 and temp in range(20,40) and windspeed in range(20,40) and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: T-Shirt")
+    print("Bottoms: Shorts")
+    print("Shoes: Flip Flops or Sandals")
+    print("Outerwear: Hoodie, Pullover")
+    print("Accessories: Umbrella, Raincoat")
+    break
+  elif category_choice == 1 and temp in range(20,35) and windspeed in range(20,40) and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: T-Shirt")
+    print("Bottoms: Jeans, Leggings")
+    print("Shoes: Sneakers")
+    print("Outerwear: Hoodie, Pullover")
+    print("Accessories: Umbrella, Raincoat")
+    break
+  elif category_choice == 1 and temp in range(20,35) and windspeed in range(40,60) and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: T-Shirt")
+    print("Bottoms: Jeans, Leggings")
+    print("Shoes: Sneakers")
+    print("Outerwear: Hoodie, Pullover, Windbreaker")
+    print("Accessories: none")
+    break
+  elif category_choice == 1 and temp in range(20,35) and windspeed in range(40,60) and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: T-Shirt")
+    print("Bottoms: Jeans, Leggings")
+    print("Shoes: Sneakers")
+    print("Outerwear: Hoodie, Pullover, Windbreaker")
+    print("Accessories: Umbrella, Raincoat")
+    break
+  elif category_choice == 2 and temp < 5 and windspeed < 20:
+    print("Recommended Outfit:")
+    print("Top: Turtleneck or Longsleeved Shirt")
+    print("Bottoms: Thick Fleece Pants")
+    print("Shoes: Waterproof Winter Boots")
+    print("Outerwear: Down Jacket")
+    print("Accessories: Beanie & Earmuffs")
+    break
+  elif category_choice == 2 and temp < 5 and windspeed in range(20,40):
+    print("Recommended Outfit:")
+    print("Top: Turtleneck, Longsleeved Shirt, Sweater")
+    print("Bottoms: Thermal Leggings / Pants")
+    print("Shoes: Waterproof Winter Boots")
+    print("Outerwear: Hooded Down Jacket")
+    print("Accessories: Beanie, Earmuffs, Scarves, Gloves")
+    break
+  elif category_choice == 2 and temp < 5 and windspeed in range(40,60):
+    print("Weather out is dangerous! Please stay safe at home")
+    break
+  elif category_choice == 2 and temp in range(5,20) and windspeed < 20 and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: Blouse or Light Sweater")
+    print("Bottoms: Trousers")
+    print("Shoes: Dressy Boots or Flats")
+    print("Outerwear: Dressy Cardigan, Blazer, Trenchcoat")
+    print("Accessories: Jewellery & Sunscreen")
+    break
+  elif category_choice == 2 and temp in range(5,20) and windspeed < 20 and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: Blouse or Light Sweater")
+    print("Bottoms: Trousers")
+    print("Shoes: Dressy Boots")
+    print("Outerwear: Dressy Cardigan, Blazer, Trenchcoat")
+    print("Accessories: Umbrella and Jewellery")
+    break
+  elif category_choice == 2 and temp in range(5,20) and windspeed in range(20,40) and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: Blouse or Light Sweater")
+    print("Bottoms: Trousers")
+    print("Shoes: Dressy Boots or Flats")
+    print("Outerwear: Dressy Cardigan, Blazer, Trenchcoat")
+    print("Accessories: Jewellery, Hair Tie & Sunscreen")
+    break
+  elif category_choice == 2 and temp in range(5,20) and windspeed in range(20,40) and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: Blouse or Light Sweater")
+    print("Bottoms: Trousers")
+    print("Shoes: Dressy Boots")
+    print("Outerwear: Dressy Cardigan or Blazer")
+    print("Accessories: Jewellery, Hair Tie & Umbrella")
+    break
+  elif category_choice == 2 and temp in range(5,20) and windspeed in range(40,60) and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: Blouse or Light Sweater")
+    print("Bottoms: Trousers")
+    print("Shoes: Dressy Boots or Flats")
+    print("Outerwear: Dressy Cardigan or Blazer")
+    print("Accessories: Jewellery, Hair Tie & Sunscreen")
+    break
+  elif category_choice == 2 and temp in range(5,20) and windspeed in range(40,60) and rain == 1:
+    print("Weather out is dangerous! Please stay safe at home")
+    break
+  elif category_choice == 2 and temp in range(20,40) and windspeed < 20 and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: Blouse")
+    print("Bottoms: Dressy Shorts or Skirt")
+    print("Shoes: Heels or Flats")
+    print("Outerwear: Light Blazer")
+    print("Accessories: Sunglasses and Jewelry")
+    break
+  elif category_choice == 2 and temp in range(20,40) and windspeed < 20 and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: Blouse")
+    print("Bottoms: Dressy Shorts or Skirt")
+    print("Shoes: Dressy Boots, Heels or Flats")
+    print("Outerwear: Rain Jacket, Blazer")
+    print("Accessories: Jewelry, Umbrella")
+    break
+  elif category_choice == 2 and temp in range(20,40) and windspeed in range(20,40) and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: Blouse")
+    print("Bottoms: Trousers or Skirt with Tights")
+    print("Shoes: Closed-Toe Heels or Flats")
+    print("Outerwear: Blazer")
+    print("Accessories: Jewelry")
+    break
+  elif category_choice == 2 and temp in range(20,35) and windspeed in range(20,40) and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: Blouse")
+    print("Bottoms: Trousers or Skirt with Tights")
+    print("Shoes: Closed-Toe Heels or Flats")
+    print("Outerwear: Blazer")
+    print("Accessories: Jewelry, Umbrella")
+    break
+  elif category_choice == 2 and temp in range(20,35) and windspeed in range(40,60) and rain == 0:
+    print("Recommended Outfit:")
+    print("Top: Turtleneck")
+    print("Bottoms: Trousers")
+    print("Shoes: Dressy Boots, Closed-Toe Heels or Flats")
+    print("Outerwear: Blazer")
+    print("Accessories: Jewelry, Scarves")
+    break
+  elif category_choice == 2 and temp in range(20,35) and windspeed in range(40,60) and rain == 1:
+    print("Recommended Outfit:")
+    print("Top: Turtleneck")
+    print("Bottoms: Trousers")
+    print("Shoes: Closed-Toe Heels or Flats, Boots")
+    print("Outerwear: Blazer")
+    print("Accessories: Jewelry, Umbrella, Scarves, Umbrella")
+    break
+  else:
+    category_choice = int(input("Pick Again: "))
